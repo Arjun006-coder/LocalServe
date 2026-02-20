@@ -52,31 +52,15 @@ ALTER TABLE notifications DISABLE ROW LEVEL SECURITY;
 -- ... [Other Table Definitions Remain Same] ...
 
 -- 9. AUTOMATIC PROFILE CREATION ON SIGNUP
--- Extracts full data from metadata to avoid RLS/confirmation issues
+-- Simplified & Bulletproof: Only handles ID and name during auth creation.
+-- Role-specific details are now collected in the Phase 3 (Onboarding) step.
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger AS $$
 BEGIN
-  INSERT INTO public.profiles (
-    id, 
-    full_name, 
-    role, 
-    phone, 
-    city, 
-    occupation, 
-    bio,
-    is_available,
-    is_verified
-  )
+  INSERT INTO public.profiles (id, full_name)
   VALUES (
     new.id, 
-    new.raw_user_meta_data->>'full_name', 
-    (new.raw_user_meta_data->>'role')::user_role,
-    new.raw_user_meta_data->>'phone',
-    new.raw_user_meta_data->>'city',
-    new.raw_user_meta_data->>'occupation',
-    new.raw_user_meta_data->>'bio',
-    true,
-    (CASE WHEN (new.raw_user_meta_data->>'role') = 'provider' THEN false ELSE false END) -- Defaults
+    COALESCE(new.raw_user_meta_data->>'full_name', 'New Member')
   );
   RETURN new;
 END;

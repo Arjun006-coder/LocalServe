@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./hooks/useAuth";
+import { AuthStateObserver } from "./components/AuthStateObserver";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import Auth from "./pages/Auth";
 import Index from "./pages/Index";
 import SearchPage from "./pages/Search";
@@ -25,18 +27,21 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <AuthStateObserver />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/provider/:id" element={<ProviderProfile />} />
-            <Route path="/booking/:id" element={<BookingPage />} />
-            <Route path="/compare" element={<ComparisonPage />} />
-            <Route path="/worker-dashboard" element={<WorkerDashboard />} />
-            <Route path="/user-dashboard" element={<UserDashboard />} />
-            <Route path="/post-service" element={<PostService />} />
-            <Route path="/notifications" element={<Notifications />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+            {/* Protected Routes */}
+            <Route path="/search" element={<ProtectedRoute><SearchPage /></ProtectedRoute>} />
+            <Route path="/provider/:id" element={<ProtectedRoute><ProviderProfile /></ProtectedRoute>} />
+            <Route path="/booking/:id" element={<ProtectedRoute><BookingPage /></ProtectedRoute>} />
+            <Route path="/compare" element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
+            <Route path="/worker-dashboard" element={<ProtectedRoute><WorkerDashboard /></ProtectedRoute>} />
+            <Route path="/user-dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+            <Route path="/post-service" element={<ProtectedRoute><PostService /></ProtectedRoute>} />
+            <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

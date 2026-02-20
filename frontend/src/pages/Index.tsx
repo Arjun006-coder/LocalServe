@@ -39,7 +39,9 @@ export default function Index() {
             {/* Navigation Backdrop */}
             <div className="fixed top-0 inset-x-0 h-20 bg-[#0e1116]/90 backdrop-blur-xl z-50 border-b border-white/5 flex items-center justify-between px-6">
                 <div className="flex items-center gap-2 group cursor-pointer" onClick={() => navigate("/")}>
-                    <div className="w-9 h-9 bg-pink-600 rounded-xl flex items-center justify-center font-black italic transition-all group-hover:rotate-12 group-hover:shadow-[0_0_20px_rgba(225,29,72,0.4)]">L</div>
+                    <div className="w-9 h-9 bg-pink-600 rounded-xl flex items-center justify-center text-white transition-all group-hover:rotate-12 group-hover:shadow-[0_0_20px_rgba(225,29,72,0.4)]">
+                        <Sparkles size={18} />
+                    </div>
                     <span className="text-xl font-bold tracking-tighter hover:text-pink-500 transition-colors">LocalServe</span>
                 </div>
                 <div className="flex items-center gap-6">
@@ -226,7 +228,9 @@ export default function Index() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                         <div className="space-y-6">
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-pink-600 rounded-lg flex items-center justify-center font-black italic">L</div>
+                                <div className="w-8 h-8 bg-pink-600 rounded-lg flex items-center justify-center text-white">
+                                    <Sparkles size={16} />
+                                </div>
                                 <span className="text-xl font-bold tracking-tighter">LocalServe</span>
                             </div>
                             <p className="text-white/60 text-sm leading-relaxed">
